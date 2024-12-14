@@ -1,9 +1,8 @@
-from window import Window
+from graphics import Window
 
 
 def main():
-    win = Window(720, 480)
-    win.running = True
+    win = Window(800, 600)
     win.wait_for_close()
 
 
