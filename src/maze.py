@@ -101,3 +101,44 @@ class Maze:
                     c.has_bottom_wall = False
                     self._cells[i][j + 1].has_top_wall = False
                     self._break_walls_r(i, j + 1)
+             
+    def solve(self):
+        print("solving..")
+        return self._solve_r_df(0, 0)        
+                    
+    def _solve_r_df(self, i ,j):
+        self._animate()
+        c = self._cells[i][j]
+        c.visited = True
+        # check if "end" cell
+        if i == self._num_cols - 1 and j == self._num_rows - 1:
+            print("solved!")
+            return True
+        
+        if i != 0 and not self._cells[i - 1][j].visited and not c.has_left_wall:
+            c.draw_move(self._cells[i - 1][j])
+            solved = self._solve_r_df(i - 1, j)
+            if solved:
+                return True
+            c.draw_move(self._cells[i - 1][j], True) # undo the move
+        if j != 0 and not self._cells[i][j - 1].visited and not c.has_top_wall:
+            c.draw_move(self._cells[i][j - 1])
+            solved = self._solve_r_df(i, j - 1)
+            if solved:
+                return True
+            c.draw_move(self._cells[i][j - 1], True)
+        if i != self._num_cols - 1 and not self._cells[i + 1][j].visited and not c.has_right_wall:
+            c.draw_move(self._cells[i + 1][j])
+            solved = self._solve_r_df(i + 1, j)
+            if solved:
+                return True
+            c.draw_move(self._cells[i + 1][j], True)
+        if j != self._num_rows - 1 and not self._cells[i][j + 1].visited and not c.has_bottom_wall:
+            c.draw_move(self._cells[i][j + 1])
+            solved = self._solve_r_df(i, j + 1)
+            if solved:
+                return True
+            c.draw_move(self._cells[i][j + 1], True)
+            
+        return False
+    
