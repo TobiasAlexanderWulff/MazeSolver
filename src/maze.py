@@ -31,11 +31,12 @@ class Maze:
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_r(0, 0)
-                
         for i in range(self._num_cols):
             for j in range(self._num_rows):
+                # default drawing style
                 self._draw_cell(i, j)
-        
+                # Reset visited for reuse in solving the maze
+                self._cells[i][j].visited = False
         print("generation completed!")
     
     def _create_cells(self):
@@ -77,6 +78,7 @@ class Maze:
                 available_directions.append("D")
                 
             if len(available_directions) == 0:
+                # drawing cells while generating
                 #self._draw_cell(i, j)
                 return
             
