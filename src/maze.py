@@ -26,17 +26,21 @@ class Maze:
         
         if seed:
             random.seed(seed)
-             
-        self._create_cells()
-    
-    def _create_cells(self):
+        
         print("generating maze..")
-        self._cells = [[Cell(self._win) for _ in range(self._num_rows)] for _ in range(self._num_cols)]        
+        self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_r(0, 0)
-        print("generation completed!")
+                
+        for i in range(self._num_cols):
+            for j in range(self._num_rows):
+                self._draw_cell(i, j)
         
+        print("generation completed!")
     
+    def _create_cells(self):
+        self._cells = [[Cell(self._win) for _ in range(self._num_rows)] for _ in range(self._num_cols)]
+                
     def _draw_cell(self, i, j):
         if self._win is None:
             return
@@ -73,7 +77,7 @@ class Maze:
                 available_directions.append("D")
                 
             if len(available_directions) == 0:
-                self._draw_cell(i, j)
+                #self._draw_cell(i, j)
                 return
             
             direction = available_directions[random.randint(0, len(available_directions) - 1)]
